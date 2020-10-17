@@ -68,3 +68,43 @@ swm_df =
     runtime = runtime_vec)
 ```
 
+## APIs
+
+Get some water data
+```{r}
+nyc_water = 
+  GET("https://data.cityofnewyork.us/resource/ia2d-e54m.csv") %>% 
+  content("parsed") # a function in httr package
+
+nyc_water_json = 
+  GET("https://data.cityofnewyork.us/resource/ia2d-e54m.json") %>% 
+  content("text") %>% 
+  jsonlite::fromJSON() %>% 
+  as_tibble()
+```
+
+## BREFSS dataset
+
+same process, different data
+```{r}
+brfss_smart2010 = 
+  GET("https://chronicdata.cdc.gov/resource/acme-vg9e.csv",
+      query = list("$limit" = 5000)) %>% # to request a query that is a list with the query parameter of 5000 $limit
+  content("parsed")
+```
+
+## some data aren't so nice
+Let's look at Pokemon
+
+```{r}
+poke = 
+  GET("http://pokeapi.co/api/v2/pokemon/1") %>%
+  content()
+
+poke$name
+poke$height
+poke$abilities
+```
+
+## Closing thoughts
+
