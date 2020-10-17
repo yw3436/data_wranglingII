@@ -1,0 +1,36 @@
+---
+title: "Reading data"
+output: github_document
+---
+
+```{r setup}
+library(tidyverse)
+library(rvest)
+library(httr)
+
+# add all the other plot options
+```
+
+## Script a table
+
+First, we want the first table from the web. 
+read in the HTML
+```{r}
+url = "http://samhda.s3-us-gov-west-1.amazonaws.com/s3fs-public/field-uploads/2k15StateFiles/NSDUHsaeShortTermCHG2015.htm" # save the url to the variable called url
+drug_use_html = read_html(url)
+
+drug_use_html
+```
+
+extract the table(s); focus on the first one
+```{r}
+tabl_marj = 
+  drug_use_html %>% 
+  html_nodes(css = "table") %>% ## transfer the original data into table; 15 tables in total
+  first() %>%  # take the first one; also there is end() or other similar functions
+  html_table() %>% 
+  slice(-1) %>% 
+  as_tibble()
+```
+
+
