@@ -1,0 +1,109 @@
+---
+title: "strings and factors"
+output: github_document
+---
+
+```{r setup}
+library(tidyverse)
+library(p8105.datasets)
+library(rvest)
+
+# add all the other plot options
+```
+
+## Strings and regular expression
+
+```{r}
+string_vec = c("my", "name", "is", "jeff")
+
+str_detect(string_vec, "jeff") # detect whether a string observation exists in a string
+
+str_detect(string_vec, "e") # can detect single letter
+
+str_replace(string_vec, "jeff", "Jeff")
+
+str_replace(string_vec, "j", "Jeff")
+```
+
+```{r}
+string_vec = c(
+  "i think we all rule for participating",
+  "i think i have been caught",
+  "i think this will be quite fun actually",
+  "it will be fun, i think"
+  )
+
+str_detect(string_vec, "i think")
+str_detect(string_vec, "^i think") # test the string starting with I think
+str_detect(string_vec, "i think$") # test the string ending with I think
+
+
+```
+
+
+
+
+```{r}
+string_vec = c(
+  "Y'all remember Pres. HW Bush?",
+  "I saw a green bush",
+  "BBQ and Bushwalking at Molonglo Gorge",
+  "BUSH -- LIVE IN CONCERT!!"
+  )
+
+str_detect(string_vec, "Bush")
+str_detect(string_vec,"[Bb]ush") # detect either B or b
+```
+
+
+```{r}
+string_vec = c(
+  '7th inning stretch',
+  '1st half soon to begin. Texas won the toss.',
+  'she is 5 feet 4 inches tall',
+  '3AM - cant sleep :('
+  )
+
+str_detect(string_vec, "^[0-9][a-zA-Z]")
+```
+
+
+```{r}
+string_vec = c(
+  'Its 7:11 in the evening',
+  'want to go to 7-11?',
+  'my flight is AA711',
+  'NetBios: scanning ip 203.167.114.66'
+  )
+
+str_detect(string_vec, "7.11") # dot . capture anything that between 7 and 11
+str_detect(string_vec, "7\\.11") # to detect 7.11
+```
+
+
+```{r}
+string_vec = c(
+  'The CI is [2, 5]',
+  ':-]',
+  ':-[',
+  'I found the answer on pages [6-7]'
+  )
+
+str_detect(string_vec, "\\[") # to test [
+```
+
+# Factors
+
+```{r}
+factor_vec = factor(c("male", "male", "female", "female"))
+
+as.numeric(factor_vec)
+```
+
+what happens if we relevel...
+
+```{r}
+factor_vec = fct_relevel(factor_vec, "male") # change male as the first
+```
+
+## NSDUH
