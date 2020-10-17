@@ -66,3 +66,39 @@ tabl_marj =
   slice(-1) %>% 
   as_tibble()
 ```
+
+## CSS Selector: star wars movie info
+
+get info from the web.
+
+``` r
+url = "https://www.imdb.com/list/ls070150896/"
+
+swm_html = 
+  read_html("https://www.imdb.com/list/ls070150896/")
+```
+
+grab elements that we need:
+
+``` r
+title_vector =
+  swm_html %>% 
+  html_nodes(css = ".lister-item-header a") %>% 
+  html_text()
+
+gross_rev_vec =
+  swm_html %>% 
+  html_nodes(css = ".text-small:nth-child(7) span:nth-child(5)") %>% 
+  html_text()
+
+runtime_vec = 
+  swm_html %>% 
+  html_nodes(css = ".runtime") %>% 
+  html_text()
+
+swm_df = 
+  tibble(
+    title = title_vector,
+    rev = gross_rev_vec,
+    runtime = runtime_vec)
+```
